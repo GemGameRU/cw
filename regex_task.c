@@ -17,10 +17,10 @@ void regex_task(Text** _text, wchar_t* expression) {
     wchar_t* context = NULL;
     setlocale(LC_ALL, "ru_RU.UTF-8");  // set the locale to the user's default locale
 
-    for (size_t i = 0; i < (*_text)->len; ++i) {
+    for (size_t i = 0; i < (*_text)->len; i++) {
         char all_match = 1;
-        wchar_t* str = wcsdup((*_text)->body[i]->body);
-        wchar_t* word = wcstok(str, seps, &context);
+        wchar_t* str_dup = wcsdup((*_text)->body[i]->body);
+        wchar_t* word = wcstok(str_dup, seps, &context);
         while (word != NULL) {
             if (!check_word(word, expression)) {
                 all_match = 0;
@@ -28,7 +28,7 @@ void regex_task(Text** _text, wchar_t* expression) {
             }
             word = wcstok(NULL, seps, &context);
         }
-        free(str);
+        free(str_dup);
         if (!all_match)
             clear(&(*_text)->body[i]);
     }
@@ -48,7 +48,6 @@ int check_word(wchar_t* word, wchar_t* expression) {
             }
             return 0;
         } else if (expression[n] == L'?' || expression[n] == word[n]) {
-            n++;
             n++;
         } else {
             return 0;

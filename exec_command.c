@@ -1,4 +1,4 @@
-#include "start.h"
+#include "exec_command.h"
 
 #include <locale.h>
 #include <stdio.h>
@@ -14,21 +14,22 @@
 
 void print_help();
 
-void start() {
+void exec_command() {
     setlocale(LC_ALL, "ru_RU.UTF-8");
     wchar_t* regex;
     static Text* text;
     text = *new_text(MIN_VECTOR_SIZE);
     int command;
 
-    if (!wscanf(L"%ld\n", &command))
+    if (!wscanf(L"%d", &command))
         ERROR("Command should be a number");
+    getwchar();  // skip newline
 
     if (command == 5) {
         print_help();
-        exit(0);
+        free_text(text);
+        return;
     }
-
     switch (command) {
         case 0:
             read_text(&text);
