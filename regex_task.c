@@ -35,25 +35,27 @@ void regex_task(Text** _text, wchar_t* expression) {
 }
 
 int check_word(wchar_t* word, wchar_t* expression) {
-    int _e = 0;
-    int _w = 0;
+    int n = 0;
     int match = 0;
-    while (expression[_e] != L'\0' && word[_w] != L'\0') {
-        if (expression[_e] == L'*') {
+    while (expression[n] != L'\0' && word[n] != L'\0') {
+        if (expression[n] == L'*') {
             for (size_t i = 0; word[i] != L'\0'; i++) {
-                match += check_word(&word[_w + i], &expression[_e + 1]);
+                match += check_word(&word[n + i], &expression[n + 1]);
                 if (match)
                     return 1;
             }
             return 0;
             break;
-        } else if (expression[_e] == L'?' || expression[_e] == word[_w]) {
-            _e++;
-            _w++;
+        } else if (expression[n] == L'?' || expression[n] == word[n]) {
+            n++;
         } else {
             return 0;
             break;
         }
+        match = 1;
     }
-    return 1;
+    if (expression[n] == L'\0' && word[n] != L'\0' || expression[n] != L'\0' && word[n] == L'\0')
+        return 0;
+
+    return match;
 }
