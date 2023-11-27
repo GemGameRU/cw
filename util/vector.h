@@ -16,11 +16,6 @@ typedef struct Text {
     String* body[];
 } Text;
 
-typedef struct {
-    Text* words;
-    Text* separators;
-} Words;
-
 String** new_string(size_t _size);
 String** extend_string(String** _str);
 void append_wchar(Text** _text, wchar_t _ch);
@@ -32,5 +27,4 @@ void append_new_string(Text** _text);
 String** last_string(Text** _text);
 void swap_strings(Text** _text, size_t _pos1, size_t _pos2);
 
-Words** from_string(String** _str);
 void free_text(Text* _text);

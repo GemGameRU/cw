@@ -78,35 +78,6 @@ void free_text(Text* _text) {
     free(_text);
 }
 
-Words** from_string_with_sep(String** _str) {
-    static Words* _new_words;
-    _new_words = calloc(1, sizeof(Words));
-    if (!_new_words) {
-        ERROR("Failed to allocate new words");
-        exit(1);  // fix warning
-    }
-    wchar_t* context;
-    _new_words->words = *new_text((*_str)->len + 1);
-    _new_words->separators = *new_text((*_str)->len + 1);
-    wchar_t* str_dup = wcsdup((*_str)->body);
-    wcstok(str_dup, L" ,.", &context);
-
-    int last = 0;
-    for (size_t i = 0; i < (*_str)->len; i++) {
-        if (str_dup[i] == (*_str)->body[i]) {
-            if (last != 0)
-                append_new_string(&_new_words->words);
-            append_wchar(&_new_words->words, str_dup[i]);
-        } else {
-            if (last != 0)
-                append_new_string(&_new_words->separators);
-            append_wchar(&_new_words->separators, (*_str)->body[i]);
-        }
-    }
-    free(str_dup);
-    return &_new_words;
-}
-
 void swap_strings(Text** _text, size_t _pos1, size_t _pos2) {
     void* temp;
     temp = (*_text)->body[_pos1];
