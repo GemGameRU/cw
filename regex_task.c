@@ -40,12 +40,10 @@ int check_word(wchar_t* word, wchar_t* expression) {
     while (expression[n] != L'\0' && word[n] != L'\0') {
         if (expression[n] == L'*') {
             for (size_t i = 0; word[i] != L'\0'; i++) {
-                match += check_word(&word[n + i], &expression[n + 1]);
-                if (match)
+                if (check_word(&word[n + i], &expression[n + 1]))
                     return 1;
             }
             return 0;
-            break;
         } else if (expression[n] == L'?' || expression[n] == word[n]) {
             n++;
         } else {
