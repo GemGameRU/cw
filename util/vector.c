@@ -36,12 +36,13 @@ Text** extend_text(Text** _text) {
 
 String** new_string(size_t _size) {
     static String* _new_str;
-    _new_str = calloc(sizeof(String) + _size * sizeof(wchar_t), 1);
+    _new_str = calloc(sizeof(String) + (_size + 2) * sizeof(wchar_t), 1);
     if (_new_str == NULL) {
         ERROR("Failed to allocate new string");
         exit(1);
     }
     _new_str->allocated = _size;
+    _new_str->len = 0;
     return &_new_str;
 }
 

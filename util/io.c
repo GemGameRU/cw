@@ -10,7 +10,7 @@
 #define PARSE_ELLIPSIS 0
 
 void read_text(Text** _text) {
-    setlocale(LC_ALL, ".utf8");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     append_new_string(_text);
     int newline = 0;
     int ended = 0;
@@ -18,7 +18,7 @@ void read_text(Text** _text) {
     int space = 0;
     int word = 1;
 
-    for (wint_t ch = getwchar(); !(newline == 1 && ch == L'\n'); ch = getwchar()) {
+    for (wchar_t ch = getwchar(); !(newline == 1 && ch == L'\n'); ch = getwchar()) {
         switch (ch) {
             case L'.':
                 dots++;
@@ -70,9 +70,9 @@ void read_text(Text** _text) {
     }
 }
 
-void output_text(Text* _text) {
-    // setlocale(LC_ALL, "ru_RU.utf8");
-    for (size_t i = 0; i < _text->len; i++)
-        if (_text->body[i]->len)
-            printf("%ls\n", _text->body[i]->body);
+void output_text(Text** _text) {
+    setlocale(LC_ALL, "ru_RU.utf8");
+    for (size_t i = 0; i < (*_text)->len; i++)
+        // if (_text->body[i]->len != 0)
+        printf("%ls\n", (*_text)->body[i]->body);
 }

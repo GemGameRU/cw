@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Wall -Og
+CFLAGS = -g -pipe
 SRC = $(wildcard *.c) $(wildcard **/*.c)
 OBJ = $(SRC:.c=.o)
 WIN_DEL = $(subst /,\,$(OBJ))

@@ -14,7 +14,7 @@
 void regex_task(Text** _text, wchar_t* expression) {
     wchar_t* context = NULL;
     wchar_t seps[] = L" ,.";
-    setlocale(LC_ALL, "");  // set the locale to the user's default locale
+    setlocale(LC_ALL, "ru_RU.UTF-8");  // set the locale to the user's default locale
 
     for (size_t i = 0; i < (*_text)->len; ++i) {
         char all_match = 1;

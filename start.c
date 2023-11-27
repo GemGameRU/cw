@@ -15,19 +15,23 @@
 void print_help();
 
 void start() {
-    setlocale(LC_ALL, ".utf8");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     wchar_t* regex;
-    Text* text = *new_text(MIN_VECTOR_SIZE);
+    static Text* text;
+    text = *new_text(MIN_VECTOR_SIZE);
     int command;
 
-    if (!scanf("%d\n", &command))
+    if (!wscanf(L"%ld\n", &command))
         ERROR("Command should be a number");
+
+    if (command == 5) {
+        print_help();
+        exit(0);
+    }
 
     switch (command) {
         case 0:
             read_text(&text);
-            output_text(text);
-            free_text(text);
             break;
         case 1:
             regex = calloc(REGEX_MAX, sizeof(wchar_t));
@@ -36,7 +40,6 @@ void start() {
             wscanf(L"%ls\n", regex);
             read_text(&text);
             regex_task(&text, regex);
-            output_text(text);
             free(regex);
             break;
         case 2:
@@ -48,16 +51,13 @@ void start() {
             for (size_t i = 0; i < text->len; i++)
                 if (text->body[i]->words < 2 || text->body[i]->words > 5)
                     clear(&text->body[i]);
-            output_text(text);
-            free_text(text);
-            break;
-        case 5:
-            print_help();
             break;
         default:
             ERROR("Wrong command");
             break;
     }
+    output_text(&text);
+    free_text(text);
 }
 
 void print_help() {
