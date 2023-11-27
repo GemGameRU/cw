@@ -73,6 +73,6 @@ void read_text(Text** _text) {
 void output_text(Text** _text) {
     setlocale(LC_ALL, "ru_RU.utf8");
     for (size_t i = 0; i < (*_text)->len; i++)
-        // if (_text->body[i]->len != 0)
-        printf("%ls\n", (*_text)->body[i]->body);
+        if ((*_text)->body[i]->len != 0)
+            printf("%ls\n", (*_text)->body[i]->body);
 }
