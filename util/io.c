@@ -34,6 +34,11 @@ void read_text(Text** _text) {
                 break;
             case L'\n':
                 newline++;
+                if (!space) {
+                    append_wchar(_text, L' ');
+                    space = 1;
+                }
+
                 break;
             case L'\t':
             case L' ':
@@ -47,7 +52,7 @@ void read_text(Text** _text) {
                     dots = 0;
                 if (ended)
                     break;
-                space++;
+                space = 1;
                 word = 0;
                 append_wchar(_text, ch);
                 break;

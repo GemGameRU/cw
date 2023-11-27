@@ -13,7 +13,7 @@
 int check_word(wchar_t* word, wchar_t* expression);
 
 void regex_task(Text** _text, wchar_t* expression) {
-    const wchar_t* seps = L" ,.\n";
+    const wchar_t* seps = L" ,.";
     wchar_t* context = NULL;
     setlocale(LC_ALL, "ru_RU.UTF-8");  // set the locale to the user's default locale
 
@@ -42,16 +42,18 @@ int check_word(wchar_t* word, wchar_t* expression) {
         if (expression[_e] == L'*') {
             for (size_t i = 0; word[i] != L'\0'; i++) {
                 match += check_word(&word[_w + i], &expression[_e + 1]);
+                if (match)
+                    return 1;
             }
+            return 0;
             break;
         } else if (expression[_e] == L'?' || expression[_e] == word[_w]) {
             _e++;
             _w++;
         } else {
-            match = 0;
+            return 0;
             break;
         }
-        match = 1;
     }
-    return 1 ? match >= 1 : 0;
+    return 1;
 }
