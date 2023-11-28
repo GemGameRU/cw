@@ -58,6 +58,7 @@ String** to_string(Words** _words) {
     static String* _new_string;
     _new_string = *new_string((*_words)->strlen + 2);
     _new_string->len = (*_words)->strlen;
+    _new_string->words = (*_words)->words->len;
     for (size_t i = 0; i < (*_words)->words->len; i++) {
         wcscat(_new_string->body, (*_words)->words->body[i]->body);
         wcscat(_new_string->body, (*_words)->separators->body[i]->body);
