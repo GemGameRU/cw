@@ -13,27 +13,27 @@ inline static void _swap_f(float** _arr, size_t _pos1, size_t _pos2) {
 }
 
 void sort_avgwordlen(Text** _text) {
-    float* cache;
-    cache = calloc((*_text)->len, sizeof(float));
-    if (cache == NULL) {
+    float* avg_lens;
+    avg_lens = calloc((*_text)->len, sizeof(float));
+    if (avg_lens == NULL) {
         ERROR("failed to allocate");
         exit(1);  // fix linter warning
     }
 
     for (size_t i = 0; i < (*_text)->len; i++) {
         Words* _tmp = *from_string_with_sep(&(*_text)->body[i]);
-        cache[i] = _tmp->avglen;
+        avg_lens[i] = _tmp->avglen;
         free_words(_tmp);
     }
 
     for (size_t i = 0; i < (*_text)->len - 1; i++) {
         for (size_t j = 0; j < (*_text)->len - i - 1; j++)
-            if (cache[i] < cache[i + 1]) {
+            if (avg_lens[i] < avg_lens[i + 1]) {
                 swap_strings(_text, i, i + 1);
-                _swap_f(&cache, i, i + 1);
+                _swap_f(&avg_lens, i, i + 1);
             }
     }
-    free(cache);
+    free(avg_lens);
 }
 void sort_text_all(Text** _text) {
     for (size_t i = 0; i < (*_text)->len; i++)
