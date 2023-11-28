@@ -26,8 +26,8 @@ void sort_avgwordlen(Text** _text) {
         free_words(_tmp);
     }
 
-    for (size_t i = 0; i < (*_text)->len - 1; i++) {
-        for (size_t j = 0; j < (*_text)->len - i - 1; j++)
+    for (size_t step = 0; step < (*_text)->len - 1; step++) {
+        for (size_t i = 0; i < (*_text)->len - step - 1; i++)
             if (avg_lens[i] < avg_lens[i + 1]) {
                 swap_strings(_text, i, i + 1);
                 _swap_f(&avg_lens, i, i + 1);
@@ -41,11 +41,11 @@ void sort_text_all(Text** _text) {
 }
 void sort_words(String** _str) {
     Words* _words = *from_string_with_sep(_str);
-    for (size_t i = 0; i < _words->words->len - 1; i++) {
-        for (size_t j = 0; j < _words->words->len - i - 1; j++)
+    for (size_t step = 0; step < _words->words->len - 1; step++) {
+        for (size_t i = 0; i < _words->words->len - step - 1; i++)
             if (_words->words->body[i]->len < _words->words->body[i + 1]->len)
                 swap_strings(&_words->words, i, i + 1);
-        }
+    }
     *_str = *to_string(&_words);
     free_words(_words);
 }
