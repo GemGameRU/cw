@@ -16,11 +16,22 @@ Words** from_string_with_sep(String** _str) {
         exit(1);  // fix warning
     }
     wchar_t* context;
-    _new_words->words = *new_text((*_str)->len + 1);
-    _new_words->separators = *new_text((*_str)->len + 1);
+    _new_words->words = *new_text((*_str)->words + 1);
+    _new_words->separators = *new_text((*_str)->words + 1);
     _new_words->strlen = (*_str)->len;
     wchar_t* str_dup = wcsdup((*_str)->body);
-    wcstok(str_dup, L" ,.", &context);
+    // wcstok(str_dup, L" ,.", &context);
+    for (size_t i = 0; i < (*_str)->len; i++) {
+        switch (str_dup[i]) {
+            case L' ':
+            case L',':
+            case L'.':
+                str_dup[i] = L'\0';
+                break;
+            default:
+                break;
+        }
+    }
 
     int last = 1;
     for (size_t i = 0; i < (*_str)->len; i++) {
@@ -59,7 +70,7 @@ float avg_len(Words* _words) {
 
     if (_words->words->len == 0)
         return 0;
-        
+
     for (size_t i = 0; i < _words->words->len; i++)
         sum += _words->words->body[i]->len;
 

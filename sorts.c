@@ -46,6 +46,7 @@ void sort_words(String** _str) {
             if (_words->words->body[i]->len < _words->words->body[i + 1]->len)
                 swap_strings(&_words->words, i, i + 1);
     }
+    free(*_str);
     *_str = *to_string(&_words);
     free_words(_words);
 }
