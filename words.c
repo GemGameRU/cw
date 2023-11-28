@@ -6,6 +6,8 @@
 #include "util/error.h"
 #include "util/vector.h"
 
+inline float avg_len(Words* _words);
+
 Words** from_string_with_sep(String** _str) {
     static Words* _new_words;
     _new_words = calloc(1, sizeof(Words));
@@ -20,15 +22,19 @@ Words** from_string_with_sep(String** _str) {
     wchar_t* str_dup = wcsdup((*_str)->body);
     wcstok(str_dup, L" ,.", &context);
 
-    int last = 0;
+    int last = 1;
     for (size_t i = 0; i < (*_str)->len; i++) {
         if (str_dup[i] == (*_str)->body[i]) {
-            if (last != 0)
+            if (last != 0) {
                 append_new_string(&_new_words->words);
+                last = 0;
+            }
             append_wchar(&_new_words->words, str_dup[i]);
         } else {
-            if (last != 0)
+            if (last != 1) {
                 append_new_string(&_new_words->separators);
+                last = 1;
+            }
             append_wchar(&_new_words->separators, (*_str)->body[i]);
         }
     }
@@ -39,23 +45,29 @@ Words** from_string_with_sep(String** _str) {
 
 String** to_string(Words** _words) {
     static String* _new_string;
-    _new_string = *new_string((*_words)->strlen + 1);
+    _new_string = *new_string((*_words)->strlen + 2);
     _new_string->len = (*_words)->strlen;
     for (size_t i = 0; i < (*_words)->words->len; i++) {
-        wcscpy(_new_string->body, (*_words)->words->body[i]->body);
-        wcscpy(_new_string->body, (*_words)->separators->body[i]->body);
+        wcscat(_new_string->body, (*_words)->words->body[i]->body);
+        wcscat(_new_string->body, (*_words)->separators->body[i]->body);
     }
     return &_new_string;
 }
 
-inline float avg_len(Words* _words) {
-    size_t sum = 0;
+float avg_len(Words* _words) {
+    float sum = 0;
 
     if (_words->words->len == 0)
         return 0;
-
+        
     for (size_t i = 0; i < _words->words->len; i++)
         sum += _words->words->body[i]->len;
 
     return sum / _words->words->len;
+}
+
+void free_words(Words* _words) {
+    free(_words->words);
+    free(_words->separators);
+    free(_words);
 }

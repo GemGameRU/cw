@@ -89,7 +89,7 @@ void output_text(Text** _text) {
 void remove_duplicats(Text** _text) {
     for (size_t i = 0; i < (*_text)->len - 1; i++)
         if ((*_text)->body[i]->len != 0)
-            for (size_t j = i + 1; j < (*_text)->len - i; j++)
+            for (size_t j = i + 1; j < (*_text)->len; j++)
                 if (wcscasecmp((*_text)->body[i]->body, (*_text)->body[j]->body) == 0)
                     clear(&(*_text)->body[j]);
 };

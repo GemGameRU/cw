@@ -11,4 +11,4 @@ typedef struct Words {
 
 Words** from_string_with_sep(String** _str);
 String** to_string(Words** _words);
-inline float avg_len(Words* _words);
+void free_words(Words* _words);

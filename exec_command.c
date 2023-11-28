@@ -6,9 +6,11 @@
 #include <wchar.h>
 
 #include "regex_task.h"
+#include "sorts.h"
 #include "util/error.h"
 #include "util/io.h"
 #include "util/vector.h"
+#include "words.h"
 
 #define REGEX_MAX 256
 
@@ -44,8 +46,12 @@ void exec_command() {
             free(regex);
             break;
         case 2:
+            read_text(&text);
+            sort_avgwordlen(&text);
             break;
         case 3:
+            read_text(&text);
+            sort_text_all(&text);
             break;
         case 4:
             read_text(&text);
