@@ -82,8 +82,7 @@ void output_text(Text** _text) {
     setlocale(LC_ALL, "ru_RU.utf8");
     for (size_t i = 0; i < (*_text)->len; i++)
         if ((*_text)->body[i]->len != 0)
-            // TODO: remove words
-            printf("%ls %zd\n", (*_text)->body[i]->body, (*_text)->body[i]->words);
+            printf("%ls\n", (*_text)->body[i]->body);
 }
 
 void remove_duplicats(Text** _text) {
