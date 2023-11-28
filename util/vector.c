@@ -60,7 +60,7 @@ Text** new_text(size_t _size) {
 
 void append_wchar(Text** _text, wchar_t _ch) {
     String** _last = last_string(_text);
-    if ((*_last)->allocated == (*_last)->len)
+    if ((*_last)->allocated == (*_last)->len + 1)
         *_last = *extend_string(_last);
     (*_last)->body[(*_last)->len++] = _ch;
 };
